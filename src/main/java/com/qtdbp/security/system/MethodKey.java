@@ -16,6 +16,7 @@ import java.lang.reflect.Method;
  * @version v1.0
  *
  */
+@Deprecated
 public class MethodKey {
 	private String className;
 	private String methodName;

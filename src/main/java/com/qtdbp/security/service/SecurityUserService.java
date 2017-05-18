@@ -3,78 +3,90 @@
  */
 package com.qtdbp.security.service;
 
-import com.zrhis.base.model.Message;
-import com.zrhis.base.model.Parameters;
-import com.zrhis.system.bean.SysUsers;
+import com.qtdbp.security.entity.SysAuthorities;
+import com.qtdbp.security.entity.SysUsers;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.stereotype.Service;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
- * 类功能说明：
+ * 类功能说明：系统用户Service
  * 
- * <p>Copyright: Copyright © 2012-2013 zrhis.com Inc.</p>
- * <p>Company:新中软科技有限公司</p>
- * @author 王成委
- * @date 2014-1-13 上午9:34:54
+ * @author caidchen
  * @version v1.0
  *
  */
-public interface SecurityUserService {
+@Service
+public class SecurityUserService {
+
+	protected Log logger = LogFactory.getLog(getClass());
+
+	@PersistenceContext
+	private EntityManager entityManager;
+
 	/**
-	 * 添加用户
-	 * @param user 用户实体
+	 * 加载用户权限
+	 * @param userName
 	 * @return
 	 */
-	public Message add(SysUsers user);
-	
+	public Collection<GrantedAuthority> loadUserAuthorities(String userName) {
+
+		List<SysAuthorities> list = this.getSysAuthoritiesByUsername(userName);
+
+		List<GrantedAuthority> auths = null ;
+		if(list != null && !list.isEmpty()) {
+			auths = new ArrayList<>();
+			for (SysAuthorities authority : list) {
+				GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(authority.getAuthorityMark());
+				auths.add(grantedAuthority);
+			}
+		}
+
+		return auths;
+	}
+
 	/**
-	 * 更新用户,仅可以更新用户名、姓名、是否可用三个字段，其他字段不可通过这个方法更新
-	 * @param user 用户实体
+	 * 先根据用户名获取到SysAuthorities集合
+	 * @param username
 	 * @return
 	 */
-	public Message update(SysUsers user);
-	
+	@SuppressWarnings("unchecked")
+	private List<SysAuthorities> getSysAuthoritiesByUsername(String username) {
+
+		String sql = "SELECT * FROM SYS_AUTHORITIES WHERE AUTHORITY_ID IN( "+
+				"SELECT DISTINCT AUTHORITY_ID FROM SYS_ROLES_AUTHORITIES  S1 "+
+				"JOIN SYS_USERS_ROLES S2 ON S1.ROLE_ID = S2.ROLE_ID "+
+				"JOIN SYS_USERS S3 ON S3.USER_ID = S2.USER_ID AND S3.USERNAME=?1)";
+
+		Query query = this.entityManager.createNativeQuery(sql, SysAuthorities.class);
+		query.setParameter(1, username);
+
+		return query.getResultList();
+	}
+
 	/**
-	 * 修改密码
-	 * @param userId
-	 * @param password
+	 * 更新用户
+	 * @param users
 	 * @return
 	 */
-	public Message modifyPassword(String userId, String oldPassword, String password);
-	
-	/**
-	 * 删除用户
-	 * @param userId 用户ID
-	 * @return
-	 */
-	public Message delete(String userId);
-	
-	/**
-	 * 查询用户
-	 * @param username 用户名
-	 * @param params 参数集合
-	 * @return
-	 */
-	public Message query(String username, Parameters params);
-	
-	/**
-	 * 根据用户Id查找权限
-	 * @param userId
-	 * @return
-	 */
-	public Message findRoleByUserId(String userId);
-	
-	/**
-	 * 为用户分配权限
-	 * @param usreId
-	 * @param roles
-	 * @return
-	 */
-	public Message assignRoles(String userId, String[] roles);
-	
-	/**
-	 * 根据机构ID查询用户
-	 * @param jgid
-	 * @return
-	 */
-	public Message queryByJgid(String jgid, Parameters param);
-	
+	public int update(SysUsers users) {
+
+		String sql = "UPDATE sys_users SET last_login=?, login_ip=? where user_id=?";
+
+		Query query = this.entityManager.createNativeQuery(sql, SysUsers.class);
+		query.setParameter(1, users.getLastLogin());
+		query.setParameter(2, users.getLoginIp());
+		query.setParameter(3, users.getUserId());
+
+		return query.executeUpdate() ;
+	}
 }

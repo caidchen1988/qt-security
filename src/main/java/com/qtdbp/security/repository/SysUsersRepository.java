@@ -3,14 +3,8 @@
  */
 package com.qtdbp.security.repository;
 
-import com.qtdbp.security.model.SysUsers;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.qtdbp.security.entity.SysUsers;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.security.core.GrantedAuthority;
-
-import java.util.Collection;
 
 /**
  * 类功能说明：用户管理Dao层
@@ -22,13 +16,8 @@ import java.util.Collection;
  */
 public interface SysUsersRepository extends JpaRepository<SysUsers, String> {
 	
-	public Page<SysUsers> findByUsernameLike(String username, Pageable pageable);
-	
-	@Query("select x from SysUsers x where VQzjgid = ?")
-	public Page<SysUsers> findByVQzjgid(String VQzjgid, Pageable pageable);
-	
-	public SysUsers getByUsername(String username);
-	
-	public Collection<GrantedAuthority> loadUserAuthorities(String username);
+//	Page<SysUsers> findByUsernameLike(String username, Pageable pageable);
+
+	SysUsers findByUsername(String username);
 	
 }

@@ -11,6 +11,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.access.AccessDeniedHandlerImpl;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -26,6 +27,8 @@ import java.io.IOException;
  * @version v1.0
  *
  */
+@Deprecated
+@Component
 public class RequestAccessDeniedHandler implements AccessDeniedHandler {
 
 	//~ Static fields/initializers =====================================================================================

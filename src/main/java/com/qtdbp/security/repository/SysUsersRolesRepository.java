@@ -1,26 +1,14 @@
-/**
- * 
- */
 package com.qtdbp.security.repository;
 
-import com.qtdbp.security.model.SysUsersRoles;
+import com.qtdbp.security.entity.SysUsersRoles;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-
 /**
- * 类功能说明：
- * 
- * <p>Copyright: Copyright © 2012-2013 zrhis.com Inc.</p>
- * @author caidchen
- * @version v1.0
+ * 系统用户角色关联数据库操作集
  *
+ * @author: caidchen
+ * @create: 2017-05-17 15:05
+ * To change this template use File | Settings | File Templates.
  */
-public interface SysUsersRolesRepository extends JpaRepository<SysUsersRoles, String> {
-	
-	public List<SysUsersRoles> findByUserId(String userId);
-	
-	public void deleteByUserId(String userId);
-	
-	public void deleteByUserId(String userId, String czybh);
+public interface SysUsersRolesRepository extends JpaRepository<SysUsersRoles, String>{
 }

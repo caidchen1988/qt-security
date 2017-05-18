@@ -21,6 +21,7 @@ import java.io.IOException;
  * @version v1.0
  *
  */
+@Deprecated
 @SuppressWarnings("deprecation")
 public class LoginAuthenticationEntryPoint extends
 		LoginUrlAuthenticationEntryPoint {

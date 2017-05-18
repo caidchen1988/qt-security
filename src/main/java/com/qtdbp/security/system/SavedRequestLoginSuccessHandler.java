@@ -19,12 +19,12 @@ import java.io.IOException;
 /**
  * 类功能说明：
  * 
- * <p>Copyright: Copyright © 2012-2013 zrhis.com Inc.</p>
  * @author caidchen
  * @version v1.0
  *
  */
-public class SavedRequestLoginSuccessHandler extends SimpleLoginSuccessHandler {
+@Deprecated
+public class SavedRequestLoginSuccessHandler extends CustomLoginSuccessHandler {
 	
     protected final Log logger = LogFactory.getLog(this.getClass());
 

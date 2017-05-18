@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  * @create: 2017-05-11 14:22
  * To change this template use File | Settings | File Templates.
  */
+@Deprecated
 public class ControllerTools {
 
     /**

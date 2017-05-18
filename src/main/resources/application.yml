@@ -8,11 +8,29 @@ spring:
     active: dev   # 默认激活application-dev.yml配置
 
 # ===================================================================
+# kaptcha配置，验证码
+# ===================================================================
+kaptcha:
+  border:
+    color: 105,179,90
+  textproducer:
+    font:
+      color: blue
+      names: 宋体,楷体,微软雅黑
+    char:
+      length: 6
+  image:
+    width: 125
+    height: 45
+  session:
+    key: code
+
+# ===================================================================
 # mybatis配置，包括分页插件配置如下
 # ===================================================================
-mybatis:
-    type-aliases-package: com.qtdbp.security
-    mapper-locations: classpath:mapper/*.xml
+#mybatis:
+#    type-aliases-package: com.qtdbp.security
+#    mapper-locations: classpath:mapper/*.xml
 
 ## 分页组件配置
 #mapper:

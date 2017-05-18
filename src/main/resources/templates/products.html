@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+
+    <title>Spring Security Example</title>
+
+</head>
+
+<body>
+
+<h1>Products!</h1>
+
+<div sec:authorize="hasRole('ROLE_USER')"> <!-- 用户类型为ROLE_USER 显示 -->
+    <p class="bg-info">恭喜您,您有 ROLE_USER 权限 </p>
+</div>
+<div sec:authorize="hasRole('ROLE_ADMIN')"> <!-- 用户类型为ROLE_ADMIN 显示 -->
+    <p class="bg-info">恭喜您,您有 ROLE_ADMIN 权限 </p>
+</div>
+
+<a th:href="@{/products/add}">添加产品</a>
+
+<p>Click <a th:href="@{/hello}">here</a> to see a greeting.</p>
+
+</body>
+
+</html>

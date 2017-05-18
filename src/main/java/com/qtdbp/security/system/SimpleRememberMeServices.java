@@ -28,7 +28,7 @@ public class SimpleRememberMeServices extends AbstractRememberMeServices {
 
 	private static final String CURRENT_NAME = "current_name";
 
-	protected SimpleRememberMeServices(String key, UserDetailsService userDetailsService) {
+	public SimpleRememberMeServices(String key, UserDetailsService userDetailsService) {
 		super(key, userDetailsService);
 	}
 
@@ -47,9 +47,6 @@ public class SimpleRememberMeServices extends AbstractRememberMeServices {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices#processAutoLoginCookie(java.lang.String[], javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-	 */
 	@Override
 	protected UserDetails processAutoLoginCookie(String[] cookieTokens,
 			HttpServletRequest request, HttpServletResponse response)

@@ -3,7 +3,7 @@
  */
 package com.qtdbp.security.system;
 
-import com.qtdbp.security.repository.SysResourceRepository;
+import com.qtdbp.security.service.SysResourceService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -26,6 +26,7 @@ import java.util.*;
  * @version v1.0
  *
  */
+@Deprecated
 public class URLSecurityMetadataSource implements
 		FilterInvocationSecurityMetadataSource,InitializingBean {
 
@@ -40,9 +41,9 @@ public class URLSecurityMetadataSource implements
 	
 	//权限集合
 	private Map<RequestMatcher, Collection<ConfigAttribute>> requestMap;
-	
+
 	@Autowired
-	private SysResourceRepository sysResourceRepository;
+	private SysResourceService resourceService ;
 	
 	/* (non-Javadoc)
 	 * @see org.springframework.security.access.SecurityMetadataSource#getAttributes(java.lang.Object)
@@ -89,7 +90,7 @@ public class URLSecurityMetadataSource implements
 	private Map<String,String> loadResuorce(){
 		Map<String,String> map = new LinkedHashMap<String,String>();
 		
-		List<Map<String,String>> list = this.sysResourceRepository.getURLResourceMapping();
+		List<Map<String,String>> list = this.resourceService.getURLResourceMapping();
 		Iterator<Map<String,String>> it = list.iterator();
 		while(it.hasNext()){
 			Map<String,String> rs = it.next();

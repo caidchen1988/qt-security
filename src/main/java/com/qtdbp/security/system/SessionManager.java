@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  * @version v1.0
  *
  */
+@Deprecated
 public class SessionManager implements SessionAuthenticationStrategy {
 
 	/* (non-Javadoc)

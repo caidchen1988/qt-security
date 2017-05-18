@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  * @version v1.0
  *
  */
+@Deprecated
 public class CaptchaAuthenticationFilter extends UsernamePasswordAuthenticationFilter{
 	
 	public static final String SPRING_SECURITY_FORM_CAPTCHA_KEY = "j_captcha";

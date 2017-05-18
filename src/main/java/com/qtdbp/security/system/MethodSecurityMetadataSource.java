@@ -3,7 +3,7 @@
  */
 package com.qtdbp.security.system;
 
-import com.qtdbp.security.repository.SysResourceRepository;
+import com.qtdbp.security.service.SysResourceService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -23,6 +23,7 @@ import java.util.*;
  * @version v1.0
  *
  */
+@Deprecated
 public class MethodSecurityMetadataSource extends
 		AbstractMethodSecurityMetadataSource implements InitializingBean{
 	
@@ -34,9 +35,9 @@ public class MethodSecurityMetadataSource extends
 	private final static String AUTH_KEY = "authorityMark";
 	
 	private Map<MethodKey, Collection<ConfigAttribute>> requestMap;
-	
+
 	@Autowired
-	private SysResourceRepository sysResourceRepository;
+	private SysResourceService resourceService ;
 	
 	/**
 	 * 根据方法获取到访问方法所需要的权限
@@ -88,7 +89,7 @@ public class MethodSecurityMetadataSource extends
 	 */
 	private Map<String,String> loadMehod(){
 		Map<String,String> resMap = new LinkedHashMap<String, String>();
-		List<Map<String,String>> list = this.sysResourceRepository.getMethodResourceMapping();
+		List<Map<String,String>> list = resourceService.getMethodResourceMapping();
 		
 		for(Map<String,String> map : list){
 			String resourcePath = map.get(RES_KEY);
